@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
@@ -30,6 +31,12 @@ class MainActivity : AppCompatActivity() {
             else R.layout.item_shop_disabled
             val view = LayoutInflater.from(this)
                 .inflate(layoutId, linearLayoutShopList, false)
+            val textViewName = view.findViewById<TextView>(R.id.textView_name)
+            val textViewWeight = view.findViewById<TextView>(R.id.textView_weight)
+            val textViewCount = view.findViewById<TextView>(R.id.textView_count)
+            textViewName.text = shopItem.name
+            textViewWeight.text = shopItem.weight.toString()
+            textViewCount.text = shopItem.count.toString()
             linearLayoutShopList.addView(view)
         }
     }
