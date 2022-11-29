@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showList(list: List<ShopItem>) {
 
+        linearLayoutShopList.removeAllViews()
+
         for (shopItem in list) {
             val layoutId = if (shopItem.enabled) R.layout.item_shop_enabled
             else R.layout.item_shop_disabled
