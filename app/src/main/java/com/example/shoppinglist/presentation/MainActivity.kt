@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showList(list: List<ShopItem>) {
+
         for (shopItem in list) {
             val layoutId = if (shopItem.enabled) R.layout.item_shop_enabled
             else R.layout.item_shop_disabled
@@ -37,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             textViewName.text = shopItem.name
             textViewWeight.text = shopItem.weight.toString()
             textViewCount.text = shopItem.count.toString()
+
+            view.setOnLongClickListener {
+                viewModel.changeEnableState(shopItem)
+                true
+            }
             linearLayoutShopList.addView(view)
         }
     }
