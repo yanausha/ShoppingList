@@ -1,9 +1,13 @@
 package com.example.shoppinglist.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.shoppinglist.domain.ShopItem
 import com.example.shoppinglist.domain.ShopListRepository
 
 object ShopListRepositoryImpl: ShopListRepository {
+
+    private val shopListLD = MutableLiveData<List<ShopItem>>()
 
     private val shopList = mutableListOf<ShopItem>()
 
@@ -16,8 +20,8 @@ object ShopListRepositoryImpl: ShopListRepository {
         }
     }
 
-    override fun getShopList(): List<ShopItem> {
-        return shopList.toList()
+    override fun getShopList(): LiveData<List<ShopItem>> {
+        return shopListLD
     }
 
     override fun getItemId(itemShopId: Int): ShopItem {
