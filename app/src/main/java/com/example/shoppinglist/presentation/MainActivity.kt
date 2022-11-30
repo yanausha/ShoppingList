@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
 
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.shopList.observe(this) {
 
         }
+    }
+
+    private fun setupRecyclerView() {
+        val recyclerViewShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
+        adapter = ShopListAdapter()
+        recyclerViewShopList.adapter = adapter
     }
 
 }
