@@ -28,11 +28,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
             DISABLED_ITEM -> R.layout.item_shop_disabled
             else -> throw RuntimeException("Unknow view type: $viewType")
         }
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_shop_enabled,
-            parent,
-            false
-        )
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return ShopItemViewHolder(view)
     }
 
