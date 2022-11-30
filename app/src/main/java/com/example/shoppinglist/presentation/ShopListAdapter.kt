@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
 
-class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
+class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
     val list = listOf<ShopItem>()
 
@@ -19,14 +19,21 @@ class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>(
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val shopItem = list[position]
+        holder.textViewName.text = shopItem.name
+        holder.textViewWeight.text = shopItem.weight.toString()
+        holder.textViewCount.text = shopItem.count.toString()
+        holder.view.setOnLongClickListener {
+            TODO()
+            true
+        }
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    class ShopItemViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+    class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val textViewName = view.findViewById<TextView>(R.id.textView_name)
         val textViewWeight = view.findViewById<TextView>(R.id.textView_weight)
         val textViewCount = view.findViewById<TextView>(R.id.textView_count)
