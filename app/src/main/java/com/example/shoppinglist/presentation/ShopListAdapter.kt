@@ -3,8 +3,11 @@ package com.example.shoppinglist.presentation
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.shoppinglist.domain.ShopItem
 
 class ShopListAdapter: RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
+
+    val list = listOf<ShopItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
         TODO("Not yet implemented")
