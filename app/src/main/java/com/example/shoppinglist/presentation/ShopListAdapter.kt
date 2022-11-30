@@ -27,7 +27,8 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
         val shopItem = shopList[position]
-        holder.textViewName.text = shopItem.name
+        val status = if (shopItem.enabled) "Active" else "Not Active"
+        holder.textViewName.text = "${shopItem.name} $status"
         holder.textViewWeight.text = shopItem.weight.toString()
         holder.textViewCount.text = shopItem.count.toString()
         holder.view.setOnLongClickListener {
