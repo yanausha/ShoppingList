@@ -11,14 +11,17 @@ import com.example.shoppinglist.domain.ShopItem
 class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
     var shopList = listOf<ShopItem>()
-    set(value) {
-        field = value
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_shop_enabled, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(
+            R.layout.item_shop_enabled,
+            parent,
+            false
+        )
         return ShopItemViewHolder(view)
     }
 
