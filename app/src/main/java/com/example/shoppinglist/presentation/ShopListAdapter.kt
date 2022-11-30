@@ -33,9 +33,9 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
         val shopItem = shopList[position]
-        val status = if (shopItem.enabled) "Active" else "Not Active"
+        val status = if (shopItem.enabled) ENABLED_ITEM else DISABLED_ITEM
         if (shopItem.enabled) {
-            holder.textViewName.text = "${shopItem.name} $status"
+            holder.textViewName.text = shopItem.name
             holder.textViewWeight.text = shopItem.weight.toString()
             holder.textViewCount.text = shopItem.count.toString()
         }
@@ -54,6 +54,11 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         holder.textViewName.text = ""
         holder.textViewWeight.text = ""
         holder.textViewCount.text = ""
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val item = shopList[position]
+        return if (item.enabled) ENABLED_ITEM else DISABLED_ITEM
     }
 
     class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
