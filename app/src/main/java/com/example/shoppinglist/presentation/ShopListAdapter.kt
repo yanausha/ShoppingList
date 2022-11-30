@@ -10,6 +10,12 @@ import com.example.shoppinglist.domain.ShopItem
 
 class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>() {
 
+    companion object {
+
+        const val ENABLED_ITEM = 1
+        const val DISABLED_ITEM = 0
+    }
+
     var shopList = listOf<ShopItem>()
         set(value) {
             field = value
