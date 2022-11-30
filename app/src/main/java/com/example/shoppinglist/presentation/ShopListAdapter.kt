@@ -23,6 +23,11 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemViewHolder {
+        val layout = when (viewType) {
+            ENABLED_ITEM -> R.layout.item_shop_enabled
+            DISABLED_ITEM -> R.layout.item_shop_disabled
+            else -> throw RuntimeException("Unknow view type: $viewType")
+        }
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.item_shop_enabled,
             parent,
