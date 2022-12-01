@@ -31,7 +31,7 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
         Log.d("ShopListAdapter", "onBindViewHolder ${++count}")
-        val shopItem = shopList[position]
+        val shopItem = getItem(position)
         holder.textViewName.text = shopItem.name
         holder.textViewWeight.text = shopItem.weight.toString()
         holder.textViewCount.text = shopItem.count.toString()
