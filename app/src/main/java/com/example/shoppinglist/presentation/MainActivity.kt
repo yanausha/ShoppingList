@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
         shopListAdapter.onShopItemLongClickListener = {
             viewModel.changeEnableState(it)
         }
+        shopListAdapter.onShopItemClickListener = {
+            viewModel.editShopItem(it)
+        }
     }
 
 }
