@@ -14,12 +14,6 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder
 
     var count = 0
 
-    var shopList = listOf<ShopItem>()
-        set(value) {
-
-            field = value
-        }
-
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
 
     var onShopItemClickListener: ((ShopItem) -> Unit)? = null
