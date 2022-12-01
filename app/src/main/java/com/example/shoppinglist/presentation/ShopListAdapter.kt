@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
 
-class ShopListAdapter : ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder>(ShopItemDiffCallback()) {
+class ShopListAdapter :
+    ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder>(ShopItemDiffCallback()) {
 
     var count = 0
 
@@ -45,10 +46,6 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder
         }
     }
 
-    override fun getItemCount(): Int {
-        return shopList.size
-    }
-
     override fun onViewRecycled(holder: ShopItemViewHolder) {
         super.onViewRecycled(holder)
         holder.textViewName.text = ""
@@ -57,7 +54,7 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder
     }
 
     override fun getItemViewType(position: Int): Int {
-        val item = shopList[position]
+        val item = getItem(position)
         return if (item.enabled) ENABLED_ITEM else DISABLED_ITEM
     }
 
@@ -65,16 +62,6 @@ class ShopListAdapter : ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder
         val textViewName = view.findViewById<TextView>(R.id.textView_name)
         val textViewWeight = view.findViewById<TextView>(R.id.textView_weight)
         val textViewCount = view.findViewById<TextView>(R.id.textView_count)
-    }
-
-    interface OnShopLongClickListener {
-
-        fun onShopItemLongClick(shopItem: ShopItem)
-    }
-
-    interface OnShopItemClickListener {
-
-        fun onShopItemClick(shopItem: ShopItem)
     }
 
     companion object {
