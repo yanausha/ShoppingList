@@ -10,6 +10,6 @@ class ShopItemDiffCallback: DiffUtil.ItemCallback<ShopItem>() {
     }
 
     override fun areContentsTheSame(oldItem: ShopItem, newItem: ShopItem): Boolean {
-        TODO("Not yet implemented")
+        return oldItem == newItem
     }
 }
