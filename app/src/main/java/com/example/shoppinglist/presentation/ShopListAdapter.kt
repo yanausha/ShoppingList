@@ -35,6 +35,7 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
+        Log.d("ShopListAdapter", "onBindViewHolder ${++count}")
         val shopItem = shopList[position]
         holder.textViewName.text = shopItem.name
         holder.textViewWeight.text = shopItem.weight.toString()
