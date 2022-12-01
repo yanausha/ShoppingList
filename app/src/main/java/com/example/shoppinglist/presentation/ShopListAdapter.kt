@@ -1,19 +1,13 @@
 package com.example.shoppinglist.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.domain.ShopItem
 
 class ShopListAdapter :
-    ListAdapter<ShopItem, ShopListAdapter.ShopItemViewHolder>(ShopItemDiffCallback()) {
-
-    var count = 0
+    ListAdapter<ShopItem, ShopItemViewHolder>(ShopItemDiffCallback()) {
 
     var onShopItemLongClickListener: ((ShopItem) -> Unit)? = null
 
@@ -31,7 +25,6 @@ class ShopListAdapter :
     }
 
     override fun onBindViewHolder(holder: ShopItemViewHolder, position: Int) {
-        Log.d("ShopListAdapter", "onBindViewHolder ${++count}")
         val shopItem = getItem(position)
         holder.textViewName.text = shopItem.name
         holder.textViewWeight.text = shopItem.weight.toString()
@@ -46,22 +39,9 @@ class ShopListAdapter :
         }
     }
 
-    override fun onViewRecycled(holder: ShopItemViewHolder) {
-        super.onViewRecycled(holder)
-        holder.textViewName.text = ""
-        holder.textViewWeight.text = ""
-        holder.textViewCount.text = ""
-    }
-
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
         return if (item.enabled) ENABLED_ITEM else DISABLED_ITEM
-    }
-
-    class ShopItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val textViewName = view.findViewById<TextView>(R.id.textView_name)
-        val textViewWeight = view.findViewById<TextView>(R.id.textView_weight)
-        val textViewCount = view.findViewById<TextView>(R.id.textView_count)
     }
 
     companion object {
