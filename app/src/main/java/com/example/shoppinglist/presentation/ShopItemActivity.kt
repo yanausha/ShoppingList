@@ -26,5 +26,12 @@ class ShopItemActivity : AppCompatActivity() {
             intent.putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
             return intent
         }
+
+        fun newIntentEditIntent(context: Context, shopItemId: Int): Intent {
+            val intent = Intent(context, ShopItemActivity::class.java)
+            intent.putExtra(EXTRA_SCREEN_MODE, MODE_EDIT)
+            intent.putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
+            return intent
+        }
     }
 }
