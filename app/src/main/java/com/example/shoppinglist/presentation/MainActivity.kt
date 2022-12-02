@@ -2,7 +2,6 @@ package com.example.shoppinglist.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
             val buttonAddItem = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
             buttonAddItem.setOnClickListener {
-                Log.d("MainActivity", it.toString())
                 val intent = ShopItemActivity.newIntentAddItem(this)
                 startActivity(intent)
             }
@@ -76,7 +74,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Log.d("MainActivity", it.toString())
             val intent = ShopItemActivity.newIntentEditIntent(this, it.id)
             startActivity(intent)
         }

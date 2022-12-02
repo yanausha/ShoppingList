@@ -4,14 +4,37 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import com.example.shoppinglist.R
+import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemActivity : AppCompatActivity() {
+
+    private lateinit var tilName: TextInputLayout
+    private lateinit var tilWeight: TextInputLayout
+    private lateinit var tilCount: TextInputLayout
+
+    private lateinit var edName: EditText
+    private lateinit var edWeight: EditText
+    private lateinit var edCount: EditText
+
+    private lateinit var buttonSave: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
+        initViews()
+    }
 
+    private fun initViews() {
+        tilName = findViewById(R.id.textInputName)
+        tilWeight = findViewById(R.id.textInputWeight)
+        tilCount = findViewById(R.id.textInputLayoutCount)
+        edName = findViewById(R.id.editTextName)
+        edWeight = findViewById(R.id.editTextWeight)
+        edCount = findViewById(R.id.editTextCount)
+        buttonSave = findViewById(R.id.buttonSave)
     }
 
     companion object {
