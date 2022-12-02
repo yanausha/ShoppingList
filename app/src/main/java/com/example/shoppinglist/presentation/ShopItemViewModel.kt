@@ -30,8 +30,15 @@ class ShopItemViewModel : ViewModel() {
         }
     }
 
-    fun editShopItem(shopItem: ShopItem) {
-        editShopItemUseCase.editListItem(shopItem)
+    fun editShopItem(inputName: String?, inputWeight: String?, inputCount: String?) {
+        val name = parseName(inputName)
+        val weight = parseWeight(inputWeight)
+        val count = parseCount(inputCount)
+        val fieldsValid = validateInput(name, weight, count)
+        if (fieldsValid) {
+            val shopItem = ShopItem(name, weight, count, true)
+            editShopItemUseCase.editListItem(shopItem)
+        }
     }
 
     private fun parseName(inputName: String?): String {
