@@ -7,7 +7,7 @@ import com.example.shoppinglist.domain.EditShopItemUseCase
 import com.example.shoppinglist.domain.GetShopItemUseCase
 import com.example.shoppinglist.domain.ShopItem
 
-class ShopItemViewModel: ViewModel() {
+class ShopItemViewModel : ViewModel() {
 
     private val repository = ShopListRepositoryImpl
 
@@ -19,12 +19,43 @@ class ShopItemViewModel: ViewModel() {
         val item = getShopItemUseCase.getItemId(shopItemId)
     }
 
-    fun addShopItem(shopItem: ShopItem) {
-        addShopItemUseCase.addShopItem(shopItem)
+    fun addShopItem(inputName: String?, inputWeight: String?, inputCount: String?) {
+        val name = parseName(inputName)
+        val weight = parseWeight(inputWeight)
+        val count = parseCount(inputCount)
+        val fieldsValid = validateInput(name, weight, count)
+        if (fieldsValid) {
+            val shopItem = ShopItem(name, weight, count, true)
+            addShopItemUseCase.addShopItem(shopItem)
+        }
     }
 
     fun editShopItem(shopItem: ShopItem) {
         editShopItemUseCase.editListItem(shopItem)
+    }
+
+    private fun parseName(inputName: String?): String {
+        return inputName?.trim() ?: ""
+    }
+
+    private fun parseWeight(inputWeight: String?): Double {
+        return try {
+            inputWeight?.trim()?.toDouble() ?: 0.0
+        } catch (e: Exception) {
+            0.0
+        }
+    }
+
+    private fun parseCount(inputCount: String?): Int {
+        return try {
+            inputCount?.trim()?.toInt() ?: 0
+        } catch (e: Exception) {
+            0
+        }
+    }
+
+    private fun validateInput(name: String, weight: Double, count: Int): Boolean {
+        return !(name.isBlank() || weight < 0 || count < 0)
     }
 
 }
