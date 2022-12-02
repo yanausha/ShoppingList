@@ -19,4 +19,8 @@ class ShopItemViewModel: ViewModel() {
         val item = getShopItemUseCase.getItemId(shopItemId)
     }
 
+    fun addShopItem(shopItem: ShopItem) {
+        addShopItemUseCase.addShopItem(shopItem)
+    }
+
 }
