@@ -1,5 +1,6 @@
 package com.example.shoppinglist.presentation
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoppinglist.data.ShopListRepositoryImpl
 import com.example.shoppinglist.domain.AddShopItemUseCase
@@ -14,6 +15,8 @@ class ShopItemViewModel : ViewModel() {
     private val getShopItemUseCase = GetShopItemUseCase(repository)
     private val addShopItemUseCase = AddShopItemUseCase(repository)
     private val editShopItemUseCase = EditShopItemUseCase(repository)
+
+    val errorInputName = MutableLiveData<Boolean>()
 
     fun getShopItem(shopItemId: Int) {
         val item = getShopItemUseCase.getItemId(shopItemId)
@@ -62,7 +65,20 @@ class ShopItemViewModel : ViewModel() {
     }
 
     private fun validateInput(name: String, weight: Double, count: Int): Boolean {
-        return !(name.isBlank() || weight < 0 || count < 0)
+        var result = true
+        if (name.isBlank()) {
+            result = false
+            errorInputName.value = true
+
+        }
+        if (weight < 0.0) {
+            result = false
+        }
+        if (count < 0) {
+            result = false
+        }
+
+        return result
     }
 
 }
