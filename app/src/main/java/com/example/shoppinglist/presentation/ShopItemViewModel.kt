@@ -23,4 +23,8 @@ class ShopItemViewModel: ViewModel() {
         addShopItemUseCase.addShopItem(shopItem)
     }
 
+    fun editShopItem(shopItem: ShopItem) {
+        editShopItemUseCase.editListItem(shopItem)
+    }
+
 }
