@@ -29,8 +29,13 @@ class ShopItemViewModel : ViewModel() {
     val errorInputCount: LiveData<Boolean>
         get() = _errorInputCount
 
+    private val _shopItem = MutableLiveData<ShopItem>()
+    val shopItem: LiveData<ShopItem>
+        get() = _shopItem
+
     fun getShopItem(shopItemId: Int) {
         val item = getShopItemUseCase.getItemId(shopItemId)
+        _shopItem.value = item
     }
 
     fun addShopItem(inputName: String?, inputWeight: String?, inputCount: String?) {
@@ -96,6 +101,14 @@ class ShopItemViewModel : ViewModel() {
 
     fun resetInputErrorName() {
         _errorInputName.value = false
+    }
+
+    fun resetInputErrorWeight() {
+        _errorInputWeight.value = false
+    }
+
+    fun resetInputErrorCount() {
+        _errorInputCount.value = false
     }
 
 }
