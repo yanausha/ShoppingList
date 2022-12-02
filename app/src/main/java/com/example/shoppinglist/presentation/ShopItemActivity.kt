@@ -6,10 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import com.example.shoppinglist.R
 import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: ShopItemViewModel
 
     private lateinit var tilName: TextInputLayout
     private lateinit var tilWeight: TextInputLayout
@@ -24,6 +27,7 @@ class ShopItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
+        viewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
         initViews()
     }
 
