@@ -33,6 +33,10 @@ class ShopItemViewModel : ViewModel() {
     val shopItem: LiveData<ShopItem>
         get() = _shopItem
 
+    private val _checkActivity = MutableLiveData<Unit>()
+    val checkActivity: LiveData<Unit>
+        get() = _checkActivity
+
     fun getShopItem(shopItemId: Int) {
         val item = getShopItemUseCase.getItemId(shopItemId)
         _shopItem.value = item
@@ -46,6 +50,7 @@ class ShopItemViewModel : ViewModel() {
         if (fieldsValid) {
             val shopItem = ShopItem(name, weight, count, true)
             addShopItemUseCase.addShopItem(shopItem)
+            finishWork()
         }
     }
 
@@ -57,6 +62,7 @@ class ShopItemViewModel : ViewModel() {
         if (fieldsValid) {
             val shopItem = ShopItem(name, weight, count, true)
             editShopItemUseCase.editListItem(shopItem)
+            finishWork()
         }
     }
 
@@ -109,6 +115,10 @@ class ShopItemViewModel : ViewModel() {
 
     fun resetInputErrorCount() {
         _errorInputCount.value = false
+    }
+
+    fun finishWork() {
+        _checkActivity.value = Unit
     }
 
 }
