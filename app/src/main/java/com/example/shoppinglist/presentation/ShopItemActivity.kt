@@ -24,6 +24,8 @@ class ShopItemActivity : AppCompatActivity() {
 
     private lateinit var buttonSave: Button
 
+    private var screenMode = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
@@ -35,7 +37,7 @@ class ShopItemActivity : AppCompatActivity() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE)) throw RuntimeException("Param screen mode is absent")
         val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)
         if (mode != MODE_ADD && mode != MODE_EDIT) throw RuntimeException("Unknown screen mode  $mode")
-
+        screenMode = mode
     }
 
     private fun initViews() {
