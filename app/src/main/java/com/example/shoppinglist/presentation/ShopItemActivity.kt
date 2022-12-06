@@ -57,7 +57,15 @@ class ShopItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun launchAddMode() {}
+    private fun launchAddMode() {
+        buttonSave.setOnClickListener {
+            viewModel.editShopItem(
+                edName.text?.toString(),
+                edWeight.text?.toString(),
+                edCount.text.toString()
+            )
+        }
+    }
 
     private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE))
