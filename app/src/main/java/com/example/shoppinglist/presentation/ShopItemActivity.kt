@@ -64,6 +64,10 @@ class ShopItemActivity : AppCompatActivity() {
             val message = if (it) getString(R.string.error_input_weght) else null
             tilName.error = message
         }
+        viewModel.errorInputCount.observe(this) {
+            val message = if (it) getString(R.string.error_input_count) else null
+            tilName.error = message
+        }
     }
 
     private fun launchEditMode() {
