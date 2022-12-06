@@ -5,4 +5,7 @@
     <string name="weight">Weight</string>
     <string name="count">Count</string>
     <string name="save">Save</string>
+    <string name="error_input_name">Error input name</string>
+    <string name="error_input_weght">Error input weight</string>
+    <string name="error_input_count">Error input count</string>
 </resources>
