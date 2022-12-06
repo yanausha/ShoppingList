@@ -60,6 +60,10 @@ class ShopItemActivity : AppCompatActivity() {
             val message = if (it) getString(R.string.error_input_name) else null
             tilName.error = message
         }
+        viewModel.errorInputWeight.observe(this) {
+            val message = if (it) getString(R.string.error_input_weght) else null
+            tilName.error = message
+        }
     }
 
     private fun launchEditMode() {
