@@ -59,7 +59,7 @@ class ShopItemActivity : AppCompatActivity() {
 
     private fun launchAddMode() {
         buttonSave.setOnClickListener {
-            viewModel.editShopItem(
+            viewModel.addShopItem(
                 edName.text?.toString(),
                 edWeight.text?.toString(),
                 edCount.text.toString()
