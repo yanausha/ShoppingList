@@ -57,7 +57,8 @@ class ShopItemActivity : AppCompatActivity() {
         }
 
         viewModel.errorInputName.observe(this) {
-
+            val message = if (it) getString(R.string.error_input_name) else null
+            tilName.error = message
         }
     }
 
