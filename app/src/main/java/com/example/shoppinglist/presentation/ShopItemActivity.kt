@@ -36,20 +36,8 @@ class ShopItemActivity : AppCompatActivity() {
         parseIntent()
         viewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
         initViews()
+        addTextChangeListeners()
 
-        edName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                TODO("Not yet implemented")
-            }
-        })
 
         when (screenMode) {
             MODE_EDIT -> launchEditMode()
@@ -72,6 +60,36 @@ class ShopItemActivity : AppCompatActivity() {
         viewModel.checkActivity.observe(this) {
             finish()
         }
+    }
+
+    private fun addTextChangeListeners() {
+        edName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.resetInputErrorName()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+        edWeight.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.resetInputErrorWeight()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+        edCount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.resetInputErrorCount()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 
     private fun launchEditMode() {
