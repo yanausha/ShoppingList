@@ -34,7 +34,30 @@ class ShopItemActivity : AppCompatActivity() {
         parseIntent()
         viewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
         initViews()
+        when (screenMode) {
+            MODE_EDIT -> launchEditMode()
+            MODE_ADD -> launchAddMode()
+        }
     }
+
+    private fun launchEditMode() {
+        viewModel.getShopItem(shopItemId)
+        viewModel.shopItem.observe(this) {
+            edName.setText(it.name)
+            edWeight.setText(it.weight.toString())
+            edCount.setText(it.count.toString())
+        }
+
+        buttonSave.setOnClickListener {
+            viewModel.editShopItem(
+                edName.text?.toString(),
+                edWeight.text?.toString(),
+                edCount.text.toString()
+            )
+        }
+    }
+
+    private fun launchAddMode() {}
 
     private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE))
