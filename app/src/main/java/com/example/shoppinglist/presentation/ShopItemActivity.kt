@@ -31,6 +31,13 @@ class ShopItemActivity : AppCompatActivity() {
         initViews()
     }
 
+    private fun parseIntent() {
+        if (!intent.hasExtra(EXTRA_SCREEN_MODE)) throw RuntimeException("Param screen mode is absent")
+        val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)
+        if (mode != MODE_ADD && mode != MODE_EDIT) throw RuntimeException("Unknown screen mode  $mode")
+
+    }
+
     private fun initViews() {
         tilName = findViewById(R.id.textInputName)
         tilWeight = findViewById(R.id.textInputWeight)
