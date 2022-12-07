@@ -53,19 +53,19 @@ class ShopItemFragment(
     }
 
     private fun observeViewModel() {
-        viewModel.errorInputName.observe(this) {
+        viewModel.errorInputName.observe(viewLifecycleOwner) {
             val message = if (it) getString(R.string.error_input_name) else null
             tilName.error = message
         }
-        viewModel.errorInputWeight.observe(this) {
+        viewModel.errorInputWeight.observe(viewLifecycleOwner) {
             val message = if (it) getString(R.string.error_input_weght) else null
             tilName.error = message
         }
-        viewModel.errorInputCount.observe(this) {
+        viewModel.errorInputCount.observe(viewLifecycleOwner) {
             val message = if (it) getString(R.string.error_input_count) else null
             tilName.error = message
         }
-        viewModel.checkActivity.observe(this) {
+        viewModel.checkActivity.observe(viewLifecycleOwner) {
             finish()
         }
     }
@@ -109,7 +109,7 @@ class ShopItemFragment(
 
     private fun launchEditMode() {
         viewModel.getShopItem(shopItemId)
-        viewModel.shopItem.observe(this) {
+        viewModel.shopItem.observe(viewLifecycleOwner) {
             edName.setText(it.name)
             edWeight.setText(it.weight.toString())
             edCount.setText(it.count.toString())
