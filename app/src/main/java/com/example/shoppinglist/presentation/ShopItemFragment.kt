@@ -44,7 +44,7 @@ class ShopItemFragment(
         super.onViewCreated(view, savedInstanceState)
         parseParams()
         viewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
-        initViews()
+        initViews(view)
         addTextChangeListeners()
         launchRightMode()
         observeViewModel()
@@ -141,14 +141,14 @@ class ShopItemFragment(
             throw RuntimeException("Param shop item id is absent")
     }
 
-    private fun initViews() {
-        tilName = findViewById(R.id.textInputName)
-        tilWeight = findViewById(R.id.textInputWeight)
-        tilCount = findViewById(R.id.textInputLayoutCount)
-        edName = findViewById(R.id.editTextName)
-        edWeight = findViewById(R.id.editTextWeight)
-        edCount = findViewById(R.id.editTextCount)
-        buttonSave = findViewById(R.id.buttonSave)
+    private fun initViews(view: View) {
+        tilName = view.findViewById(R.id.textInputName)
+        tilWeight = view.findViewById(R.id.textInputWeight)
+        tilCount = view.findViewById(R.id.textInputLayoutCount)
+        edName = view.findViewById(R.id.editTextName)
+        edWeight = view.findViewById(R.id.editTextWeight)
+        edCount = view.findViewById(R.id.editTextCount)
+        buttonSave = view.findViewById(R.id.buttonSave)
     }
 
     companion object {
