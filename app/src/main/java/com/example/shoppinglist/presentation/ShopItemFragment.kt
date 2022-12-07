@@ -66,7 +66,7 @@ class ShopItemFragment(
             tilName.error = message
         }
         viewModel.checkActivity.observe(viewLifecycleOwner) {
-            finish()
+            activity?.onBackPressed()
         }
     }
 
