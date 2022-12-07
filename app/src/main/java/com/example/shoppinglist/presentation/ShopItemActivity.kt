@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ShopItemViewModel
+/*    private lateinit var viewModel: ShopItemViewModel
 
     private lateinit var tilName: TextInputLayout
     private lateinit var tilWeight: TextInputLayout
@@ -28,19 +28,20 @@ class ShopItemActivity : AppCompatActivity() {
     private lateinit var buttonSave: Button
 
     private var screenMode = MODE_UNKNOWN
-    private var shopItemId = ShopItem.UNDEFINED_ID
+    private var shopItemId = ShopItem.UNDEFINED_ID*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
-        parseIntent()
+/*        parseIntent()
         viewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
         initViews()
         addTextChangeListeners()
         launchRightMode()
         observeViewModel()
+        */
     }
-
+/*
     private fun observeViewModel() {
         viewModel.errorInputName.observe(this) {
             val message = if (it) getString(R.string.error_input_name) else null
@@ -146,7 +147,7 @@ class ShopItemActivity : AppCompatActivity() {
         edCount = findViewById(R.id.editTextCount)
         buttonSave = findViewById(R.id.buttonSave)
     }
-
+*/
     companion object {
 
         private const val EXTRA_SCREEN_MODE = "extra_mode"
@@ -168,4 +169,5 @@ class ShopItemActivity : AppCompatActivity() {
             return intent
         }
     }
+
 }
