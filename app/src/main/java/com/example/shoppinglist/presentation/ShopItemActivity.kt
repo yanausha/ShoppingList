@@ -14,19 +14,19 @@ import com.example.shoppinglist.domain.ShopItem
 import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemActivity : AppCompatActivity() {
-/*
-    private lateinit var viewModel: ShopItemViewModel
+    /*
+        private lateinit var viewModel: ShopItemViewModel
 
-    private lateinit var tilName: TextInputLayout
-    private lateinit var tilWeight: TextInputLayout
-    private lateinit var tilCount: TextInputLayout
+        private lateinit var tilName: TextInputLayout
+        private lateinit var tilWeight: TextInputLayout
+        private lateinit var tilCount: TextInputLayout
 
-    private lateinit var edName: EditText
-    private lateinit var edWeight: EditText
-    private lateinit var edCount: EditText
+        private lateinit var edName: EditText
+        private lateinit var edWeight: EditText
+        private lateinit var edCount: EditText
 
-    private lateinit var buttonSave: Button
-*/
+        private lateinit var buttonSave: Button
+    */
     private var screenMode = MODE_UNKNOWN
     private var shopItemId = ShopItem.UNDEFINED_ID
 

@@ -136,7 +136,7 @@ class ShopItemFragment(
 
     private fun parseParams() {
 
-        if (screenMode != MODE_ADD && screenMode != MODE_ADD)
+        if (screenMode != MODE_ADD && screenMode != MODE_EDIT)
             throw RuntimeException("Param screen mode is absent")
 
         if (screenMode == MODE_EDIT && shopItemId == ShopItem.UNDEFINED_ID)
