@@ -164,6 +164,11 @@ class ShopItemFragment : Fragment() {
         buttonSave = view.findViewById(R.id.buttonSave)
     }
 
+    interface OnEditingFinishedListener {
+
+        fun onEditingFinished()
+    }
+
     companion object {
 
         private const val SCREEN_MODE = "extra_mode"
