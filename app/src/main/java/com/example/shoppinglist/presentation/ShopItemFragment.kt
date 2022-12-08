@@ -30,8 +30,8 @@ class ShopItemFragment : Fragment() {
 
     private lateinit var buttonSave: Button
 
-    private val screenMode: String = MODE_UNKNOWN
-    private val shopItemId: Int = ShopItem.UNDEFINED_ID
+    private var screenMode: String = MODE_UNKNOWN
+    private var shopItemId: Int = ShopItem.UNDEFINED_ID
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -135,11 +135,19 @@ class ShopItemFragment : Fragment() {
 
     private fun parseParams() {
 
-        if (screenMode != MODE_ADD && screenMode != MODE_EDIT)
-            throw RuntimeException("Param screen mode is absent: $screenMode")
+        val args = requireArguments()
 
-        if (screenMode == MODE_EDIT && shopItemId == ShopItem.UNDEFINED_ID)
-            throw RuntimeException("Param shop item id is absent")
+        if (!args.containsKey(SCREEN_MODE))
+            throw RuntimeException("Param screen mode is absent")
+        val mode = args.getString(SCREEN_MODE)
+        if (mode != MODE_ADD && mode != MODE_EDIT)
+            throw RuntimeException("Unknown screen mode  $mode")
+        screenMode = mode
+        if (mode == MODE_EDIT) {
+            if (!args.containsKey(SHOP_ITEM_ID))
+                throw RuntimeException("Param shop item id is absent")
+            shopItemId = args.getInt(SHOP_ITEM_ID, ShopItem.UNDEFINED_ID)
+        }
     }
 
     private fun initViews(view: View) {
