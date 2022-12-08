@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun isOnePainMode(): Boolean {
+    private fun isOnePaneMode(): Boolean {
         return shopItemContainer == null
     }
 
