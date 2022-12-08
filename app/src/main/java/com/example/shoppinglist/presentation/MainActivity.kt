@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         shopItemContainer = findViewById(R.id.shop_item_container)
 
-
         setupRecyclerView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.shopList.observe(this) {
@@ -34,6 +33,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun isOnePainMode(): Boolean {
+        return shopItemContainer == null
     }
 
     private fun setupRecyclerView() {
