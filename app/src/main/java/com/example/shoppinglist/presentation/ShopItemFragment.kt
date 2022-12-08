@@ -17,7 +17,7 @@ import com.example.shoppinglist.domain.ShopItem
 import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemFragment(
-    private val screenMode: String = MODE_UNKNOWN,
+    private val screenMode: String,
     private val shopItemId: Int = ShopItem.UNDEFINED_ID
 ) : Fragment() {
 
@@ -137,7 +137,7 @@ class ShopItemFragment(
     private fun parseParams() {
 
         if (screenMode != MODE_ADD && screenMode != MODE_EDIT)
-            throw RuntimeException("Param screen mode is absent")
+            throw RuntimeException("Param screen mode is absent: $screenMode")
 
         if (screenMode == MODE_EDIT && shopItemId == ShopItem.UNDEFINED_ID)
             throw RuntimeException("Param shop item id is absent")
