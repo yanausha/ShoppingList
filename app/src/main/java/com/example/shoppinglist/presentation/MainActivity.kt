@@ -31,8 +31,12 @@ class MainActivity : AppCompatActivity() {
 
             val buttonAddItem = findViewById<FloatingActionButton>(R.id.button_add_shop_item)
             buttonAddItem.setOnClickListener {
-                val intent = ShopItemActivity.newIntentAddItem(this)
-                startActivity(intent)
+                if (isOnePaneMode()) {
+                    val intent = ShopItemActivity.newIntentAddItem(this)
+                    startActivity(intent)
+                } else {
+                    launchFragment(ShopItemFragment.newInstanceAddItem())
+                }
             }
         }
     }
@@ -91,9 +95,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupClickListener() {
+
         shopListAdapter.onShopItemClickListener = {
-            val intent = ShopItemActivity.newIntentEditIntent(this, it.id)
-            startActivity(intent)
+            if (isOnePaneMode()) {
+                val intent = ShopItemActivity.newIntentEditIntent(this, it.id)
+                startActivity(intent)
+            } else {
+                launchFragment(ShopItemFragment.newInstanceEditItem(it.id))
+            }
         }
     }
 
