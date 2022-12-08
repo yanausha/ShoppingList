@@ -80,8 +80,9 @@ class ShopItemFragment : Fragment() {
             tilName.error = message
         }
         viewModel.checkActivity.observe(viewLifecycleOwner) {
-            activity?.onBackPressed()
+            onEditingFinishedListener.onEditingFinished()
         }
+
     }
 
     private fun launchRightMode() {
