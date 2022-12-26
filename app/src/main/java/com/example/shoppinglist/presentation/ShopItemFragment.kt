@@ -8,28 +8,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.shoppinglist.R
+import com.example.shoppinglist.databinding.FragmentShopItemBinding
 import com.example.shoppinglist.domain.ShopItem
-import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemFragment : Fragment() {
 
     private lateinit var viewModel: ShopItemViewModel
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
 
-    private lateinit var tilName: TextInputLayout
-    private lateinit var tilWeight: TextInputLayout
-    private lateinit var tilCount: TextInputLayout
-
-    private lateinit var edName: EditText
-    private lateinit var edWeight: EditText
-    private lateinit var edCount: EditText
-
-    private lateinit var buttonSave: Button
+    private var _binding: FragmentShopItemBinding? = null
+    private val binding: FragmentShopItemBinding
+        get() = _binding ?: throw RuntimeException("FragmentShopItemBinding == null")
 
     private var screenMode: String = MODE_UNKNOWN
     private var shopItemId: Int = ShopItem.UNDEFINED_ID
@@ -53,32 +44,22 @@ class ShopItemFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_shop_item, container, false)
+    ): View {
+        _binding = FragmentShopItemBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
-        initViews(view)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         addTextChangeListeners()
         launchRightMode()
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.errorInputName.observe(viewLifecycleOwner) {
-            val message = if (it) getString(R.string.error_input_name) else null
-            tilName.error = message
-        }
-        viewModel.errorInputWeight.observe(viewLifecycleOwner) {
-            val message = if (it) getString(R.string.error_input_weght) else null
-            tilName.error = message
-        }
-        viewModel.errorInputCount.observe(viewLifecycleOwner) {
-            val message = if (it) getString(R.string.error_input_count) else null
-            tilName.error = message
-        }
         viewModel.checkActivity.observe(viewLifecycleOwner) {
             onEditingFinishedListener.onEditingFinished()
         }
@@ -93,7 +74,7 @@ class ShopItemFragment : Fragment() {
     }
 
     private fun addTextChangeListeners() {
-        edName.addTextChangedListener(object : TextWatcher {
+        binding.editTextName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -102,7 +83,7 @@ class ShopItemFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
-        edWeight.addTextChangedListener(object : TextWatcher {
+        binding.editTextWeight.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -111,7 +92,7 @@ class ShopItemFragment : Fragment() {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
-        edCount.addTextChangedListener(object : TextWatcher {
+        binding.editTextCount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -124,27 +105,21 @@ class ShopItemFragment : Fragment() {
 
     private fun launchEditMode() {
         viewModel.getShopItem(shopItemId)
-        viewModel.shopItem.observe(viewLifecycleOwner) {
-            edName.setText(it.name)
-            edWeight.setText(it.weight.toString())
-            edCount.setText(it.count.toString())
-        }
-
-        buttonSave.setOnClickListener {
+        binding.buttonSave.setOnClickListener {
             viewModel.editShopItem(
-                edName.text?.toString(),
-                edWeight.text?.toString(),
-                edCount.text.toString()
+                binding.editTextName.text?.toString(),
+                binding.editTextWeight.text.toString(),
+                binding.editTextCount.text.toString()
             )
         }
     }
 
     private fun launchAddMode() {
-        buttonSave.setOnClickListener {
+        binding.buttonSave.setOnClickListener {
             viewModel.addShopItem(
-                edName.text?.toString(),
-                edWeight.text?.toString(),
-                edCount.text.toString()
+                binding.editTextName.text?.toString(),
+                binding.editTextWeight.text.toString(),
+                binding.editTextCount.text.toString()
             )
         }
     }
@@ -164,16 +139,6 @@ class ShopItemFragment : Fragment() {
                 throw RuntimeException("Param shop item id is absent")
             shopItemId = args.getInt(SHOP_ITEM_ID, ShopItem.UNDEFINED_ID)
         }
-    }
-
-    private fun initViews(view: View) {
-        tilName = view.findViewById(R.id.textInputName)
-        tilWeight = view.findViewById(R.id.textInputWeight)
-        tilCount = view.findViewById(R.id.textInputLayoutCount)
-        edName = view.findViewById(R.id.editTextName)
-        edWeight = view.findViewById(R.id.editTextWeight)
-        edCount = view.findViewById(R.id.editTextCount)
-        buttonSave = view.findViewById(R.id.buttonSave)
     }
 
     interface OnEditingFinishedListener {
