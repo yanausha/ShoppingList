@@ -43,7 +43,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
     fun getShopItem(shopItemId: Int) {
         viewModelScope.launch {
             val item = getShopItemUseCase.getItemId(shopItemId)
-            _shopItem.postValue(item)
+            _shopItem.value = item
         }
     }
 
@@ -130,6 +130,6 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun finishWork() {
-        _checkActivity.postValue(Unit)
+        _checkActivity.value = Unit
     }
 }
