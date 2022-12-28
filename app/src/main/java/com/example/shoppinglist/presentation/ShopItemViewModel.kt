@@ -4,19 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.shoppinglist.data.ShopListRepositoryImpl
 import com.example.shoppinglist.domain.AddShopItemUseCase
 import com.example.shoppinglist.domain.EditShopItemUseCase
 import com.example.shoppinglist.domain.GetShopItemUseCase
 import com.example.shoppinglist.domain.ShopItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class ShopItemViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val repository = ShopListRepositoryImpl(application)
 
@@ -45,9 +41,9 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
         get() = _checkActivity
 
     fun getShopItem(shopItemId: Int) {
-        scope.launch {
+        viewModelScope.launch {
             val item = getShopItemUseCase.getItemId(shopItemId)
-            _shopItem.value = item
+            _shopItem.postValue(item)
         }
     }
 
@@ -57,7 +53,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
         val count = parseCount(inputCount)
         val fieldsValid = validateInput(name, weight, count)
         if (fieldsValid) {
-            scope.launch {
+            viewModelScope.launch {
                 val shopItem = ShopItem(name, weight, count, true)
                 addShopItemUseCase.addShopItem(shopItem)
                 finishWork()
@@ -73,7 +69,7 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
         val fieldsValid = validateInput(name, weight, count)
         if (fieldsValid) {
             _shopItem.value?.let {
-                scope.launch {
+                viewModelScope.launch {
                     val item = it.copy(name = name, weight = weight, count = count)
                     editShopItemUseCase.editListItem(item)
                     finishWork()
@@ -134,11 +130,6 @@ class ShopItemViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun finishWork() {
-        _checkActivity.value = Unit
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        scope.cancel()
+        _checkActivity.postValue(Unit)
     }
 }
