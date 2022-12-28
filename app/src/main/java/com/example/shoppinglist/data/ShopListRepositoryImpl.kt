@@ -11,20 +11,20 @@ class ShopListRepositoryImpl(application: Application) : ShopListRepository {
     private val shopListDao = AppDatabase.getInstance(application).shopListDao()
     private val mapper = ShopListMapper()
 
-    override fun getItemId(itemShopId: Int): ShopItem {
+    override suspend fun getItemId(itemShopId: Int): ShopItem {
         val dbModel = shopListDao.getShopItem(itemShopId)
         return mapper.mapDbModelToEntity(dbModel)
     }
 
-    override fun addShopItem(itemShop: ShopItem) {
+    override suspend fun addShopItem(itemShop: ShopItem) {
         shopListDao.addShopItem(mapper.mapEntityToDbModel(itemShop))
     }
 
-    override fun deleteShopItem(itemShop: ShopItem) {
+    override suspend fun deleteShopItem(itemShop: ShopItem) {
         shopListDao.deleteShopItem(itemShop.id)
     }
 
-    override fun editListItem(itemShop: ShopItem) {
+    override suspend fun editListItem(itemShop: ShopItem) {
         shopListDao.addShopItem(mapper.mapEntityToDbModel(itemShop))
     }
 

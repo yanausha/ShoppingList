@@ -107,9 +107,9 @@ class ShopItemFragment : Fragment() {
         viewModel.getShopItem(shopItemId)
         binding.buttonSave.setOnClickListener {
             viewModel.editShopItem(
-                binding.editTextName.text?.toString(),
-                binding.editTextWeight.text.toString(),
-                binding.editTextCount.text.toString()
+                inputName = binding.editTextName.text?.toString(),
+                inputWeight = binding.editTextWeight.text.toString(),
+                inputCount = binding.editTextCount.text.toString()
             )
         }
     }
