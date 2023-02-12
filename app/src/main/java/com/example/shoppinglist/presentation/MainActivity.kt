@@ -9,19 +9,31 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
 import com.example.shoppinglist.databinding.ActivityMainBinding
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
-    private lateinit var viewModel: MainViewModel
+    private val component by lazy {
+        (application as ShopListApp).component
+    }
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
+    }
+
     private lateinit var shopListAdapter: ShopListAdapter
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupRecyclerView()
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
         viewModel.shopList.observe(this) {
             shopListAdapter.submitList(it)
         }
