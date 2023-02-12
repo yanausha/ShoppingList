@@ -1,51 +1,120 @@
 package com.example.shoppinglist.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppinglist.R
-import com.example.shoppinglist.domain.ShopItem
+import com.example.shoppinglist.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     private lateinit var viewModel: MainViewModel
-    private lateinit var linearLayoutShopList: LinearLayout
+    private lateinit var shopListAdapter: ShopListAdapter
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        linearLayoutShopList = findViewById(R.id.LinearLayout_shopList)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupRecyclerView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.shopList.observe(this) {
-            showList(it)
-        }
-    }
+            shopListAdapter.submitList(it)
 
-    private fun showList(list: List<ShopItem>) {
 
-        linearLayoutShopList.removeAllViews()
-
-        for (shopItem in list) {
-            val layoutId = if (shopItem.enabled) R.layout.item_shop_enabled
-            else R.layout.item_shop_disabled
-            val view = LayoutInflater.from(this)
-                .inflate(layoutId, linearLayoutShopList, false)
-            val textViewName = view.findViewById<TextView>(R.id.textView_name)
-            val textViewWeight = view.findViewById<TextView>(R.id.textView_weight)
-            val textViewCount = view.findViewById<TextView>(R.id.textView_count)
-            textViewName.text = shopItem.name
-            textViewWeight.text = shopItem.weight.toString()
-            textViewCount.text = shopItem.count.toString()
-
-            view.setOnLongClickListener {
-                viewModel.changeEnableState(shopItem)
-                true
+            binding.buttonAddShopItem.setOnClickListener {
+                if (isOnePaneMode()) {
+                    val intent = ShopItemActivity.newIntentAddItem(this)
+                    startActivity(intent)
+                } else {
+                    launchFragment(ShopItemFragment.newInstanceAddItem())
+                }
             }
-            linearLayoutShopList.addView(view)
         }
     }
+
+    private fun isOnePaneMode(): Boolean {
+        return binding.shopItemContainer == null
+
+    }
+
+    private fun launchFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.shop_item_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun setupRecyclerView() {
+
+        with(binding.rvShopList) {
+            shopListAdapter = ShopListAdapter()
+            adapter = shopListAdapter
+            recycledViewPool.setMaxRecycledViews(
+                ShopListAdapter.ENABLED_ITEM,
+                ShopListAdapter.MAX_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                ShopListAdapter.DISABLED_ITEM,
+                ShopListAdapter.MAX_POOL_SIZE
+            )
+        }
+        setupLongClickListener()
+        setupClickListener()
+        setupSwipeListener(binding.rvShopList)
+    }
+
+    private fun setupSwipeListener(recyclerViewShopList: RecyclerView) {
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = shopListAdapter.currentList[viewHolder.absoluteAdapterPosition]
+                viewModel.deleteShopItem(item)
+
+            }
+
+        }
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(recyclerViewShopList)
+    }
+
+    private fun setupClickListener() {
+
+        shopListAdapter.onShopItemClickListener = {
+            if (isOnePaneMode()) {
+                val intent = ShopItemActivity.newIntentEditIntent(this, it.id)
+                startActivity(intent)
+            } else {
+                launchFragment(ShopItemFragment.newInstanceEditItem(it.id))
+            }
+        }
+    }
+
+    private fun setupLongClickListener() {
+        shopListAdapter.onShopItemLongClickListener = {
+            viewModel.changeEnableState(it)
+        }
+    }
+
+    override fun onEditingFinished() {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
+    }
+
 }
