@@ -4,11 +4,12 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import android.util.Log
 
 class ContentProvider: ContentProvider() {
 
     override fun onCreate(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
     override fun query(
@@ -18,7 +19,8 @@ class ContentProvider: ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        TODO("Not yet implemented")
+        Log.d("ContentProvider", "query $uri")
+        return null
     }
 
     override fun getType(uri: Uri): String? {
