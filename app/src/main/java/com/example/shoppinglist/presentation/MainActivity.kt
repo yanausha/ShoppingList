@@ -152,7 +152,16 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedList
 
     private fun setupLongClickListener() {
         shopListAdapter.onShopItemLongClickListener = {
-            viewModel.changeEnableState(it)
+//            viewModel.changeEnableState(it)
+            thread {
+                contentResolver.update(
+                    Uri.parse("content://com.example.shoppinglist/shop_items"),
+                    null,
+                    null,
+                    arrayOf(it.id.toString())
+                )
+            }
+
         }
     }
 }

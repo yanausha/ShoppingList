@@ -82,7 +82,15 @@ class ContentProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?
     ): Int {
-        TODO("Not yet implemented")
+        return when (uriMatcher.match(uri)) {
+            GET_SHOP_ITEMS_QUERY -> {
+                val id = selectionArgs?.get(0)?.toInt() ?: -1
+                val newItem = shopListDao.getShopItemThroughProvider(id).copy()
+                shopListDao.addShopItemThroughProvider(newItem)
+                newItem.toString().length
+            }
+            else -> 0
+        }
     }
 
     companion object {
