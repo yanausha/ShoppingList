@@ -1,6 +1,8 @@
 package com.example.shoppinglist.presentation
 
+import android.content.ContentValues
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,9 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.shoppinglist.data.ContentProvider
 import com.example.shoppinglist.databinding.FragmentShopItemBinding
 import com.example.shoppinglist.domain.ShopItem
 import javax.inject.Inject
+import kotlin.concurrent.thread
 
 class ShopItemFragment : Fragment() {
 
@@ -128,11 +132,33 @@ class ShopItemFragment : Fragment() {
 
     private fun launchAddMode() {
         binding.buttonSave.setOnClickListener {
-            viewModel.addShopItem(
-                binding.editTextName.text?.toString(),
-                binding.editTextWeight.text.toString(),
-                binding.editTextCount.text.toString()
-            )
+//            viewModel.addShopItem(
+//                binding.editTextName.text?.toString(),
+//                binding.editTextWeight.text.toString(),
+//                binding.editTextCount.text.toString()
+//            )
+
+            thread {
+                context?.contentResolver?.insert(
+                    Uri.parse("content://com.example.shoppinglist/shop_items"),
+                    ContentValues().apply {
+                        put(ContentProvider.SHOP_ITEM_COLUMN_ID, 0)
+                        put(
+                            ContentProvider.SHOP_ITEM_COLUMN_NAME,
+                            binding.editTextName.text?.toString()
+                        )
+                        put(
+                            ContentProvider.SHOP_ITEM_COLUMN_WEIGHT,
+                            binding.editTextWeight.text.toString()
+                        )
+                        put(
+                            ContentProvider.SHOP_ITEM_COLUMN_COUNT,
+                            binding.editTextCount.text.toString()
+                        )
+                        put(ContentProvider.SHOP_ITEM_COLUMN_ENABLED, true)
+                    }
+                )
+            }
         }
     }
 
